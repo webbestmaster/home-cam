@@ -1,6 +1,8 @@
 // @flow
 
 import React, {Component, type Node} from 'react';
+
+import {startStreaming} from './home-helper';
 // import {Link} from 'react-router-dom';
 
 // import type {InitialDataType} from '../../provider/intial-data/intial-data-type';
@@ -27,6 +29,39 @@ type PropsType = {
 
 type StateType = null;
 
-export function Home(): Node {
-    return <h1>home</h1>;
+export class Home extends Component<PropsType, StateType> {
+    constructor(props: PropsType) {
+        super(props);
+
+        this.ref = {
+            video: React.createRef<HTMLVideoElement>(),
+        };
+    }
+
+    componentDidMount() {
+        startStreaming(this.ref.video.current);
+    }
+
+    ref: {|
+        +video: {|
+            current: HTMLVideoElement | null,
+        |},
+    |};
+
+    update(data) {
+        console.log(data)
+    }
+
+    render(): Node {
+        const {ref} = this;
+
+        return (
+            <div>
+                {/*<input type="file" accept="image/*;capture=camera"/>*/}
+                {/*<device type="media" onChange={this.update}/>*/}
+                <video controls ref={ref.video}/>
+                <h1>home</h1>
+            </div>
+        );
+    }
 }
