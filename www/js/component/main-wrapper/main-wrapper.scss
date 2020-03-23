@@ -1,0 +1,20 @@
+/* stylelint-disable selector-pseudo-class-no-unknown */
+
+@import './../../../css/var';
+
+.main_wrapper {
+    background-color: $main-background-text-color;
+    background-position: 50% 0;
+
+    .paper_wrapper {
+        border-radius: 0;
+        box-shadow: none;
+        margin: 0;
+    }
+}
+
+:global {
+    .window-loaded.desktop {
+        background-image: url('./image/main-bg.webp');
+    }
+}

@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /cms
+
+Host: https://skazki.land
+Sitemap: https://skazki.land/sitemap.xml
+Sitemap: https://skazki.land/sitemap-img.xml

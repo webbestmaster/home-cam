@@ -1,0 +1,15 @@
+/* stylelint-disable selector-pseudo-class-no-unknown */
+
+@import './var';
+
+body {
+    background-color: $main-background-text-color;
+    color: $main-text-color;
+    font-family: $main-font-family;
+    font-size: $main-font-size;
+    line-height: $main-line-height;
+}
+
+:global .app-wrapper {
+    display: block;
+}

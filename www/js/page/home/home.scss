@@ -1,0 +1,61 @@
+@import '../../../css/var';
+@import '../../../css/service';
+
+.home__wrapper {
+    background-color: #ccc;
+    background-image: url('image/empty.jpg');
+    background-position: center center;
+    background-size: cover;
+    color: #fff;
+    font-size: 26px;
+    padding: 100px 10px;
+    text-align: center;
+}
+
+.home__title_image {
+    display: block;
+    margin: 0 auto;
+}
+
+.home__category_list {
+    display: block;
+    min-height: 100vh;
+    padding-top: $ui-unit;
+}
+
+.home__category_link__wrapper {
+    @extend %clear-self;
+
+    display: block;
+    min-height: 120px;
+    padding: $ui-unit * 2 0;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.home__category_link__icon {
+    float: left;
+    height: 120px;
+    padding-bottom: 10px;
+    padding-right: 20px;
+    width: 120px;
+}
+
+.home__category_link__text_content {
+    display: block;
+}
+
+.home__category_link__title {
+    color: $main-text-color;
+    display: block;
+    font-size: 22px;
+    margin-bottom: $ui-unit;
+}
+
+.home__category_link__short_description {
+    color: $main-text-color;
+    display: block;
+}

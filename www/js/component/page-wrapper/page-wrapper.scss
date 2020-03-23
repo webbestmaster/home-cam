@@ -1,0 +1,45 @@
+@import './../../../css/var';
+
+$page-transition-time: 1000ms;
+
+.main_content {
+    height: auto;
+    //min-height: 100vh;
+    //height: 100vh;
+    min-height: auto;
+
+    /*
+    &:after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+    */
+}
+
+/*
+.main_content__min_height {
+    float: right;
+    width: 0;
+    display: block;
+    min-height: 1000px;
+}
+*/
+
+.transition_enter {
+    opacity: 0;
+}
+
+.transition_enter_active {
+    opacity: 1;
+    transition: opacity $page-transition-time;
+}
+
+.transition_exit {
+    opacity: 1;
+}
+
+.transition_exit_active {
+    opacity: 0;
+    transition: opacity $page-transition-time;
+}
