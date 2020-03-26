@@ -6,8 +6,8 @@ const host = 'localhost';
 // const host = '192.168.147.25';
 
 const mainProxyUrlSetting = {
-    target: `http://${host}:${ssrServerPort}/`,
-    // target: `http://${'192.168.147.59'}:${'8088'}/`,
+    // target: `http://${host}:${ssrServerPort}/`,
+    target: `http://localhost:8080/`,
     changeOrigin: true, // for this option only: see documentations here https://github.com/chimurai/http-proxy-middleware#http-proxy-middleware-options
 };
 
@@ -25,7 +25,7 @@ module.exports.devServer = {
     disableHostCheck: true,
     proxy: {
         // '/manifest.json': mainProxyUrlSetting,
-        '/file': mainProxyUrlSetting,
+        '/post-file': mainProxyUrlSetting,
         '/again': mainProxyUrlSetting,
         // '/upload-file/': mainProxyUrlSetting,
     },

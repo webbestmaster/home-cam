@@ -10,18 +10,23 @@ export function startStreaming(video) {
 
     if (mediaSupport) {
         navigator.mediaDevices
-            .getUserMedia({video: true})
-            .then(function (mediaStream) {
-                // cameraStream = mediaStream;
+            .getUserMedia({video: true, audio: false})
+            .then(async function (mediaStream) {
+
+                video.srcObject = mediaStream;
+
+                video.play();
+
                 var options = {
                     audioBitsPerSecond: 128000,
                     videoBitsPerSecond: 2500000,
-                    mimeType: 'video/webm'
+                    mimeType: 'video/webm; codecs=vp9'
                 }
-                var mediaRecorder = new MediaRecorder(mediaStream, options);
 
-                mediaRecorder.start();
-                console.log(mediaRecorder.state);
+                var mediaRecorder = new MediaRecorder(mediaStream, options);
+                mediaRecorder.start(3e3);
+
+                // cat new-file.webm >> start-file.webm
 
                 mediaRecorder.ondataavailable = function (e) {
                     console.log(e.data);
@@ -29,19 +34,14 @@ export function startStreaming(video) {
                     // chunks.push(e.data);
                 }
 
-                setInterval(() => {
-                    // mediaRecorder.stop();
-                    // console.log(mediaRecorder.state);
+                // setInterval(() => {
+                //     mediaRecorder.stop();
+                //     mediaRecorder.start();
+                // }, 3e3);
 
-                    const rrr = mediaRecorder.requestData();
-                    console.log(rrr)
-                }, 10e3);
-
-                // stream.srcObject = mediaStream;
-
-                video.srcObject = mediaStream;
-
-                video.play();
+                // while (1) {
+                //     await recordForTime(5e3, mediaStream);
+                // }
             })
             .catch(function (error) {
                 console.log('Unable to access camera: ' + error);
@@ -53,19 +53,58 @@ export function startStreaming(video) {
     }
 }
 
+function recordForTime(time, mediaStream) {
+    return new Promise((resolve) => {
+        var options = {
+            audioBitsPerSecond: 128000,
+            videoBitsPerSecond: 2500000,
+            mimeType: 'video/webm'
+        }
+
+        var mediaRecorder = new MediaRecorder(mediaStream, options);
+
+        mediaRecorder.start();
+
+        mediaRecorder.ondataavailable = function (e) {
+            console.log(e.data);
+            // saveBlobSaFile(e.data);
+            // chunks.push(e.data);
+        }
+
+        setTimeout(() => {
+            resolve();
+            mediaRecorder.stop();
+        }, time);
+    });
+}
+
+function saveBlobSaFile(blob) {
+    var a = document.createElement("a");
+    document.body.appendChild(a);
+    a.style = "display: none";
+
+    const url = window.URL.createObjectURL(blob);
+
+    a.href = url;
+    a.download = Date.now() + '.webm';
+    a.click();
+    window.URL.revokeObjectURL(url);
+}
+
 function sendBlobToServer(blob) {
     const formData = new FormData();
 
-    // var a = document.createElement("a");
-    // document.body.appendChild(a);
-    // a.style = "display: none";
+    // saveBlobSaFile(blob);
 
+    // return;
     // formData.append('username', 'abc123');
     // formData.append('complete', false);
     // formData.append('description', 'abc123');
-    formData.append('file[]', blob, Date.now() + 'file-name-here.webm');
+    formData.append('file', blob, Date.now() + 'file-name-here.webm');
 
-    fetch('/file', {
+    console.log(111)
+
+    fetch('/post-file', {
         method: 'POST',
         body: formData,
     });
